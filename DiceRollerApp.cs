@@ -10,16 +10,22 @@ namespace DB4_DiceRolling
 
         public static void Start()
         {
+            //initialize the random number generator
             generator = new Random();
 
             int rollCount = 1;
             int dieSides;
+            
             Console.WriteLine("Welcome to the GC Casino!");
             Console.Write("How many sides should each die have? ");
+            
+            //die side validation, no less than 2 sides are allowed.
             while(!int.TryParse(Console.ReadLine(), out dieSides) || dieSides <= 1)
             {
-                Console.WriteLine("That was invalid, how many sides should each die have? ");
+                Console.Write("\nThat was invalid, how many sides should each die have? ");
             }
+
+            //Main loop, Roll the dice, print the results to the console.
             do
             {
                 PrintResults(rollCount, dieSides, RollDie(dieSides), RollDie(dieSides));
@@ -41,22 +47,24 @@ namespace DB4_DiceRolling
             Console.WriteLine($"You rolled a {resultOne} and a {resultTwo} ({total} total)");
             if(dieSides == 6)
             {
+                //known combinations on 6 sided die
                 if(total == 2)
                 {
                     Console.WriteLine("Snake Eyes");
                 }
-                if (total == 3)
+                else if (total == 3)
                 {
                     Console.WriteLine("Ace Deuce");
                 }
-                if (total == 12)
+                else if (total == 12)
                 {
                     Console.WriteLine("Box Cars");
                 }
-                if (total == 7 || total == 11)
+                else if (total == 7 || total == 11)
                 {
                     Console.WriteLine("Win!");
                 }
+                //possible with above combination.
                 if (total == 2 || total == 3 || total == 12)
                 {
                     Console.WriteLine("Craps!");
@@ -80,7 +88,7 @@ namespace DB4_DiceRolling
             else
             {
                 Console.WriteLine("Invalid Entry.");
-                return RollAgain();
+                return RollAgain(); //call back to prompt again.
             }
         }
     }
